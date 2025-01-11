@@ -19,7 +19,7 @@ Check out the live version of the project: [Live Demo Link](#)
 ## 🛠️ Technologies Used
 
 ### Front-end:
-- JavaScript - Core language for logic and interactions.
+- TypeScript - Core language for logic and interactions.
 - next.js - Library for building user interfaces.
 - Tailwind CSS - Utility-first CSS framework for styling.
 ---
