@@ -1,3 +1,29 @@
+# Dashboard Admin (persian)
+
+A fully responsive and feature-rich Note App built with Next, JavaScript, and Tailwind CSS . 
+---
+
+## 📋 Features
+
+- Responsive Design: Seamlessly adapts to different screen sizes.  
+- Customizable Components: Reusable React components styled with Tailwind CSS.  
+- Modern Tools: Utilizes modern web development technologies for high performance.  
+
+---
+## 🚀 Live Demo
+
+Check out the live version of the project: [Live Demo Link](#)
+
+---
+
+## 🛠️ Technologies Used
+
+### Front-end:
+- JavaScript - Core language for logic and interactions.
+- next.js - Library for building user interfaces.
+- Tailwind CSS - Utility-first CSS framework for styling.
+---
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
