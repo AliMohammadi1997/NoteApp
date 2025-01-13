@@ -67,14 +67,13 @@ const NoteApp = () => {
             completed: false
         }
 
-        {
-            note.noteTitle && setNote(note => {
-                return { ...note, notes: [...note.notes, newNote] }
-            })
+        if (note.noteTitle) {
+            setNote(prevNote => ({
+                ...prevNote,
+                notes: [...prevNote.notes, newNote]
+            }));
         }
     };
-
-
 
     const emptyInput = () => {
         setNote(note => {
