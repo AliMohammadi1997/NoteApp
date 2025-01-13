@@ -1,5 +1,5 @@
 'use client'
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Colors from "./colors";
 import Notes from "./notes";
 
@@ -10,108 +10,94 @@ interface Notes {
     completed: boolean
 }
 
-interface NoteState {
-    colors: string[],
-    notes: Notes[],
-    noteTitle: string,
-    inputColor: string,
-    status: string
-}
+
 
 const NoteApp = () => {
 
-    const [note, setNote] = useState<NoteState>({
-        colors: [
-            '#f8fafc',
-            '#f87171',
-            '#fb923c',
-            '#facc15',
-            '#84cc16',
-            '#2dd4bf',
-            '#4ade80',
-            '#22d3ee',
-            '#60a5fa',
-            '#8b5cf6',
-            '#d946ef',
-            '#fb7185',
-        ],
-        notes: [],
-        noteTitle: '',
-        inputColor: '',
-        status: 'all'
-    })
+    const [notes, setNotes] = useState<Notes[]>([])
+    const [noteTitle, setNoteTitle] = useState<string>('')
+    const [inputColor, setInputColor] = useState<string>('')
+    const [status, setStatus] = useState<string>('all')
+    const [colors] = useState<string[]>([
+        '#f8fafc',
+        '#f87171',
+        '#fb923c',
+        '#facc15',
+        '#84cc16',
+        '#2dd4bf',
+        '#4ade80',
+        '#22d3ee',
+        '#60a5fa',
+        '#8b5cf6',
+        '#d946ef',
+        '#fb7185',
+    ])
+
+
+
+    useEffect(() => {
+        const storedNotes = JSON.parse(localStorage.getItem("todos") || "[]") as Notes[];
+        setNotes(storedNotes)
+    },[])
+
+
+    useEffect(() => {
+        localStorage.setItem("todos", JSON.stringify(notes));
+    },[notes])
 
     const inputRef = useRef(null)
 
     const noteTitleHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setNote(note => {
-            return { ...note, noteTitle: e.target.value }
-        })
+        setNoteTitle(e.target.value)
     }
 
     const inputColorHandler = (color: string) => {
-        setNote(note => {
-            return { ...note, inputColor: color }
-        })
+        setInputColor(color)
     }
 
     const addTodo = () => {
-        setNote(note => {
-            return { ...note, noteTitle: '' }
-        });
+
 
         const newNote = {
             id: Date.now(),
-            title: note.noteTitle,
-            color: note.inputColor,
+            title: noteTitle,
+            color: inputColor,
             completed: false
         }
 
-        if (note.noteTitle) {
-            setNote(prevNote => ({
-                ...prevNote,
-                notes: [...prevNote.notes, newNote]
-            }));
+        if (noteTitle) {
+            setNotes([...notes, newNote])
         }
+        setNoteTitle('')
+
     };
 
     const emptyInput = () => {
-        setNote(note => {
-            return { ...note, inputColor: '#f8fafc' }
-        });
-
-        setNote(note => {
-            return { ...note, noteTitle: '' }
-        })
+        setInputColor('#f8fafc')
+        setNoteTitle('')
     }
 
 
     const removeNote = (noteId: number) => {
-        const removeNote = note.notes.filter(note => note.id !== noteId)
-        setNote(note => {
-            return { ...note, notes: removeNote }
-        });
+        const removeNote = notes.filter(note => note.id !== noteId)
+        setNotes( removeNote)
     };
 
 
     const editNotes = (noteId: number) => {
-        const newNote = [...note.notes]
+        const newNote = [...notes]
 
         newNote.forEach(note => {
             if (note.id === noteId) {
                 note.completed = !note.completed
             }
         });
-        setNote(note => {
-            return { ...note, notes: newNote }
-        });
+        setNotes(newNote)
 
     };
 
     const filterTodo = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        setNote(note => {
-            return { ...note, status: e.target.value }
-        })
+        setStatus(e.target.value)
     }
 
 
@@ -124,7 +110,7 @@ const NoteApp = () => {
 
             <div className="flex flex-col items-center w-full">
                 <div className="flex flex-col  md:flex-row justify-center items-start md:items-center mt-5 mb-2 w-1/2">
-                    <input ref={inputRef} placeholder="Write NoteApp..." style={{ backgroundColor: note.inputColor }} onChange={noteTitleHandler} value={note.noteTitle} type="text" className="rounded outline-none placeholder-black placeholder-opacity-50  w-full h-12 p-3 font-serif text-xl mb-3 md:m-0 " />
+                    <input ref={inputRef} placeholder="Write NoteApp..." style={{ backgroundColor:inputColor }} onChange={noteTitleHandler} value={noteTitle} type="text" className="rounded outline-none placeholder-black placeholder-opacity-50  w-full h-12 p-3 font-serif text-xl mb-3 md:m-0 " />
 
 
                     <select onChange={filterTodo} name="Todo" className=" outline-none ml-2 h-12 w-30 cursor-pointer text-xs text-purple-900 font-sans rounded">
@@ -136,7 +122,7 @@ const NoteApp = () => {
                 </div>
 
                 <div className="flex justify-start items-center w-1/2  ">
-                    {note.colors.map(item => <Colors onColor={inputColorHandler} key={item} color={item} />)}
+                    {colors.map((item,i) => <Colors  onColor={inputColorHandler} key={i} color={item} />)}
                 </div>
 
                 <div className=' w-1/2 h-20 mb-5 flex items-start justify-end' >
@@ -148,17 +134,17 @@ const NoteApp = () => {
 
             <div className=" w-full">
                 <ul className="flex flex-col justify-center items-center ">
-                    {note.status === 'all' && note.notes.map(note => (
+                    {status === 'all' && notes.map(note => (
                         <Notes key={note.id} {...note} onRemove={removeNote} onEdit={editNotes} />
                     ))}
 
-                    {note.status === 'completed' && note.notes.filter(item => item.completed).map(
+                    {status === 'completed' && notes.filter(item => item.completed).map(
                         note => (
                             <Notes key={note.id} {...note} onRemove={removeNote} onEdit={editNotes} />
                         ))
                     }
 
-                    {note.status === 'uncompleted' && note.notes.filter(item => item.completed == false ).map(
+                    {status === 'uncompleted' && notes.filter(item => item.completed == false ).map(
                         note => (
                             <Notes key={note.id} {...note} onRemove={removeNote} onEdit={editNotes} />
                         ))
