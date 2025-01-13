@@ -1,4 +1,4 @@
-# Dashboard Admin (persian)
+# Note App
 
 A fully responsive and feature-rich Note App built with Next, JavaScript, and Tailwind CSS . 
 ---
