@@ -12,7 +12,7 @@ const Colors = ({color,onColor}:PropTypes) => {
 
     return (
         <>
-            <button onClick={()=> {btnColorHandler(color)}} className= 'w-8 h-8 rounded-3xl' style={{backgroundColor:color}}></button>
+            <button onClick={()=> {btnColorHandler(color)}} className= 'w-4 h-4 rounded-full m-1' style={{backgroundColor:color}}></button>
         </>
      );
 }
