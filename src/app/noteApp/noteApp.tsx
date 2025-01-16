@@ -127,7 +127,7 @@ const NoteApp = () => {
                     <input ref={inputRef} placeholder="Write NoteApp..." style={{ backgroundColor: note.inputColor }} onChange={noteTitleHandler} value={note.noteTitle} type="text" className="rounded outline-none placeholder-black placeholder-opacity-50  w-full h-12 p-3 font-serif text-xl mb-3 md:m-0 " />
 
 
-                    <select onChange={filterTodo} name="Todo" className=" outline-none ml-2 h-12 w-30 cursor-pointer text-xs text-purple-900 font-sans rounded">
+                    <select onChange={filterTodo} name="Todo" className=" outline-none ml-2 h-8 md:h-12 w-30 cursor-pointer text-xs text-purple-900 font-sans rounded">
                         <option value="all">All</option>
                         <option value="completed">Completed</option>
                         <option value="uncompleted">UnCompleted</option>
