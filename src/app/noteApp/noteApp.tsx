@@ -124,7 +124,7 @@ const NoteApp = () => {
 
             <div className="flex flex-col items-center w-full">
                 <div className="flex flex-col  md:flex-row justify-center items-start md:items-center mt-5 mb-2 w-1/2">
-                    <input ref={inputRef} placeholder="Write NoteApp..." style={{ backgroundColor: note.inputColor }} onChange={noteTitleHandler} value={note.noteTitle} type="text" className="rounded outline-none placeholder-black placeholder-opacity-50  w-full h-12 p-3 font-serif text-xl mb-3 md:m-0 " />
+                    <input ref={inputRef} placeholder="Write NoteApp..." style={{ backgroundColor: note.inputColor }} onChange={noteTitleHandler} value={note.noteTitle} type="text" className="rounded outline-none placeholder-black placeholder-opacity-50  w-full h-12 p-3 font-serif text-xl text-black mb-3 md:m-0 " />
 
 
                     <select onChange={filterTodo} name="Todo" className=" outline-none ml-2 h-8 md:h-12 w-30 cursor-pointer text-xs text-purple-900 font-sans rounded">
